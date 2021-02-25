@@ -6,7 +6,7 @@ For a machine to be a computer, it *must* have the following:
 1. Adressable memory that holds both instruction and data;
 2. Arithmetic logic unit (ALU);
 3. Program counter;
-   
+
 ---
 
 ### **CPU (Central Processing Unit)**
@@ -29,15 +29,16 @@ For a machine to be a computer, it *must* have the following:
 
     #### **Register File**
     - A collection of several registers
-</br>  
+<br/>  
 
 ## **CPU Control Unit**  
 ---
+~~~asm
     LOAD    R3, b       # Loads the value of b into the Register3
     LOAD    R4, c       # Loads the value of c into the Register4
     ADD     R3, R4      # Add the values of R3 and R4 
     STORE   R3, a       # Store the sum result in a
-
+~~~
 
 ![CPU Control Unit](assets/CPU_control_unit.jpg)
 <br/>

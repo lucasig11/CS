@@ -1,5 +1,5 @@
+http://faculty.salina.k-state.edu/tim/ossg/Introduction/compArch.html
 # ***John von Neumann - Computer Architecture***
-###### ***http://faculty.salina.k-state.edu/tim/ossg/Introduction/compArch.html***
 ---
 For a machine to be a computer, it *must* have the following:
 
@@ -53,14 +53,14 @@ For a machine to be a computer, it *must* have the following:
     - ALU does calculations.
     - I/O unit loads or stores data between main memory and registers.
 
-```
-PC = <machine start address>;       # Sets the Program counter to initial address
-IR = memory[PC];                    # Sets the PC current instruction into the Instruction Register 
+~~~c++
+PC = <machine start address>;       // Sets the Program counter to initial address
+IR = memory[PC];                    // Sets the PC current instruction into the Instruction Register 
 haltFlag = CLEAR;                   
-while(haltFlag not SET) {  
-    execute(IR);                    # Executes whatever is stored in the IR
-    PC = PC + sizeof(INSTRUCT);     # Increase PC pointer address (current address + instruction size)
-    IR = memory[PC];                # Retrive next instruction (fetch phase)  
+while (haltFlag not SET) {  
+    execute(IR);                    // Executes whatever is stored in the IR
+    PC = PC + sizeof(INSTRUCT);     // Increase PC pointer address (current address + instruction size)
+    IR = memory[PC];                // Retrive next instruction (fetch phase)  
 };  
-```
+~~~
 

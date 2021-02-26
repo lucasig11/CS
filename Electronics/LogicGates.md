@@ -10,28 +10,28 @@ https://youtu.be/sTu3LwpF6XI - **Ben Eater:** Making logic gates from transistor
 ##### Buffer Gate:
 Outputs the same value received for the input.
 
-| $\Alpha$   | Output  |
+| A   | Output  |
 | :-----:    | :-----: | 
 |    0       |    0    |
 |    1       |    1    |
 <br>
 
 ##### NOT Gate:
-Outputs the complementary of $\Alpha$ ($\overline{\rm \Alpha}$).
+Outputs the complementary of A (A').
 
-| $\Alpha$   | Output  |
+| A   | Output  |
 | :-----:    | :-----: | 
 |    0       |    1    |
 |    1       |    0    |
 <br>
 
-##### AND Gate:
-Receives two inputs $\Alpha$ and $\Beta$ and returns $\Alpha \ast \Beta$.
-Finds the *minimun* between binary digits.
+##### ⋀ AND Gate:
+Receives two inputs A and B and returns A * B.
+Finds the *minimum* between binary digits.
 
 *Serial connection between the transistors.*
 
-| $\Alpha$ | $\Beta$  | Output  |
+| A | B  | Output  |
 | :-----:  | :-----:  | :-----: | 
 |    0     |    0     |    0    |
 |    1     |    0     |    0    |
@@ -39,12 +39,12 @@ Finds the *minimun* between binary digits.
 |    1     |    1     |    1    |
 <br>
 
-##### OR Gate:
-Receives two inputs $\Alpha$ and $\Beta$ and returns $\Alpha + \Beta$.
+##### ⋁ OR Gate:
+Receives two inputs A and B and returns A + B.
 Finds the *maximum* between binary digits.
 *Parallel connection between the transistors.*
 
-| $\Alpha$ | $\Beta$  | Output  |
+| A | B  | Output  |
 | :-----:  | :-----:  | :-----: | 
 |    0     |    0     |    0    |
 |    1     |    0     |    1    |
@@ -52,13 +52,13 @@ Finds the *maximum* between binary digits.
 |    1     |    1     |    1    |
 <br>
 
-##### NAND Gate:
-Receives two inputs $\Alpha$ and $\Beta$ and returns $\overline{\Alpha \ast \Beta}$.
+##### ⊼ NAND Gate:
+Receives two inputs A and B and returns (A * B)'.
 Can be constructed with an AND gate followed by a NOT gate.
-Expression: $\overline{\Alpha \wedge \Beta}$ or $\neg({\Alpha \wedge \Beta)}$ 
+Expression: ¬(A ⋀ B)
 
 
-| $\Alpha$ | $\Beta$  | Output  |
+| A | B  | Output  |
 | :-----:  | :-----:  | :-----: | 
 |    0     |    0     |    1    |
 |    1     |    0     |    1    |
@@ -66,12 +66,12 @@ Expression: $\overline{\Alpha \wedge \Beta}$ or $\neg({\Alpha \wedge \Beta)}$
 |    1     |    1     |    0    |
 <br>
 
-##### NOR Gate:
+##### ⊽ NOR Gate:
 Complementary of OR gate.
-Receives two inputs $\Alpha$ and $\Beta$ and returns $\overline{\Alpha + \Beta}$.
+Receives two inputs A and B and returns (A + B)'.
 
 
-| $\Alpha$ | $\Beta$  | Output  |
+| A | B  | Output  |
 | :-----:  | :-----:  | :-----: | 
 |    0     |    0     |    1    |
 |    1     |    0     |    0    |
@@ -79,12 +79,12 @@ Receives two inputs $\Alpha$ and $\Beta$ and returns $\overline{\Alpha + \Beta}$
 |    1     |    1     |    0    |
 <br>
 
-##### XOR Gate:
-Receives two inputs $\Alpha$ and $\Beta$ and returns $(\Alpha + \Beta) \ast (\overline{\Alpha} + \overline{\Beta})$.
+##### ⊻ XOR Gate:
+Receives two inputs A and B and returns (A + B) * ( A'+ B').
 Return 1/HIGH when the number of **true** inputs is odd.
 
 
-| $\Alpha$ | $\Beta$  | Output  |
+| A | B  | Output  |
 | :-----:  | :-----:  | :-----: | 
 |    0     |    0     |    0    |
 |    1     |    0     |    1    |
@@ -94,11 +94,11 @@ Return 1/HIGH when the number of **true** inputs is odd.
 
 ##### XNOR Gate:
 Complementary of XOR gate.
-Receives two inputs $\Alpha$ and $\Beta$ and returns $(\Alpha \ast \Beta) + (\overline{\Alpha} \ast \overline{\Beta})$.
+Receives two inputs A and B and returns (A * B) + (A' * B').
 Return 1/HIGH when both inputs are the same.
 
 
-| $\Alpha$ | $\Beta$  | Output  |
+| A | B  | Output  |
 | :-----:  | :-----:  | :-----: | 
 |    0     |    0     |    1    |
 |    1     |    0     |    0    |

@@ -1,5 +1,5 @@
 
-## Computer Science Studies
+## Index
 
 ---
 

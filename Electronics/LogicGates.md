@@ -3,6 +3,7 @@
 ![Logic Gates](assets/logic_gates.jpg)
 
 **Buffer Gate:** Outputs the same value received for the input.
+
 | Input   | Output  |
 | :-----: | :-----: | 
 |    1    |    1    |

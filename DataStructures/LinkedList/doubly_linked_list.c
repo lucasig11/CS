@@ -2,21 +2,30 @@
 #include <stdlib.h>
 #include "prototypes.h"
 
+// Node definition
+typedef struct node {
+    int value;
+    struct node* next; 
+    struct node* prev; 
+}node;
+
+node *head = NULL;
+
 // Main functions
 int main(void)
 {
-    node *head = NULL;
     node *tmp;
-
+    // Create 25 nodes and insert them at the list's head
     for (int i = 0; i < 26; i++) {
         tmp = create_new_node(i);
         insert_at_head(&head, tmp);
     }
-    
+    // Find a node with the value 13
     tmp = find_node(head, 13);
     printf("found node with value %d\n", tmp->value);
-
+    // Insert a node after the found node
     insert_after_node(tmp, create_new_node(120));
+    // Remove the list's head
     remove_node(&head, tmp);
     print_list(head);   
     return 0;
@@ -24,12 +33,14 @@ int main(void)
 
 node *create_new_node(int value)
 {
-    node *result = malloc(sizeof(node));
-    if (result == NULL) exit(1);
-    result->value = value;
-    result->next = NULL;
-    result->prev = NULL;
-    return result;
+    // Malloc the node
+    node *newnode = malloc(sizeof(node));
+    if (newnode == NULL) exit(1);
+    // Set the node values
+    newnode->value = value;
+    newnode->next = NULL;
+    newnode->prev = NULL;
+    return newnode;
 }
 
 node *insert_at_head(node **head, node *node_to_insert)

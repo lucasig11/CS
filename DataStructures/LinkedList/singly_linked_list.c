@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include "prototypes.h"
 
+// Node definition
+typedef struct node {
+    int value;
+    struct node* next;  
+}node;
+
 node *head = NULL;
 
 // Main functions
@@ -31,7 +37,6 @@ node *create_new_node(int value)
     newnode->next = NULL;
     return newnode;
 }
-
 
 node *insert_at_head(node **head, node *node_to_insert) // send **head, so we can change the *head;
 {

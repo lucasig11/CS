@@ -1,5 +1,5 @@
 # Compiler
-CC=clang
+CC=gcc
  
 # Flags for compiler
 CC_FLAGS=-W         \

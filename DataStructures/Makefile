@@ -6,6 +6,10 @@ CC_FLAGS=-W         \
          -Wall      \
          -pedantic
 
+all : singly doubly
 
-linkedlist : LinkedList/LinkedList.c
-	$(CC) -o LinkedList/linkedlist LinkedList/LinkedList.c $(CC_FLAGS)
+singly: LinkedList/singly_linked_list.c 
+	$(CC) -o LinkedList/singly_linked_list LinkedList/singly_linked_list.c $(CC_FLAGS)
+
+doubly: LinkedList/doubly_linked_list.c
+	$(CC) -o LinkedList/doubly_linked_list LinkedList/doubly_linked_list.c $(CC_FLAGS)

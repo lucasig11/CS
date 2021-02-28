@@ -34,10 +34,10 @@ For a machine to be a computer, it *must* have the following:
 ## **CPU Control Unit**  
 ---
 ~~~asm
-    LOAD    R3, b       # Loads the value of b into the Register3
-    LOAD    R4, c       # Loads the value of c into the Register4
-    ADD     R3, R4      # Add the values of R3 and R4 
-    STORE   R3, a       # Store the sum result in a
+    LOAD    R3, b       ; Loads the value of b into the Register3
+    LOAD    R4, c       ; Loads the value of c into the Register4
+    ADD     R3, R4      ; Add the values of R3 and R4 
+    STORE   R3, a       ; Store the sum result in a
 ~~~
 
 ![CPU Control Unit](assets/CPU_control_unit.jpg)

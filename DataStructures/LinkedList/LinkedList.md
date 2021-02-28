@@ -9,8 +9,8 @@
 **[See doubly-linked list implementation in C.](doubly_linked_list.c)**
 
 ~~~bash
-cd DataStructures
-make all                    
+cd DataStructures       
+make lists                    
 cd LinkedList
 ./singly_linked_list    ## or ./doubly_linked_list
 ~~~

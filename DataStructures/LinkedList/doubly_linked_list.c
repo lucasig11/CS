@@ -1,13 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "prototypes.h"
 
 // Node definition
 typedef struct node {
     int value;
     struct node* next; 
     struct node* prev; 
-}node;
+} node;
+
+// Prototypes
+node *create_new_node(int value);
+node *insert_at_head(node **head, node *node_to_insert);
+node *find_node(node *head, int value);
+void remove_node(node **head, node *node_to_remove);
+void insert_after_node(node *node_to_insert_after, node *newnode);
+void print_list(node *head);
 
 node *head = NULL;
 

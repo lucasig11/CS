@@ -35,3 +35,7 @@
     - [NOR Gate](Electronics/LogicGates.md#nor-gate)
     - [XOR Gate](Electronics/LogicGates.md#xor-gate)
     - [XNOR Gate](Electronics/LogicGates.md#xnor-gate)
+
+#### Data Structures
+
+- [**Linked lists**](DataStructures/LinkedList/LinkedList.md)

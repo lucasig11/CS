@@ -5,7 +5,7 @@
 typedef struct node {
     int value;
     struct node* next;  
-}node;
+} node;
 
 // Prototypes
 node *create_new_node(int value);

@@ -39,3 +39,4 @@
 #### Data Structures
 
 - [**Linked lists**](DataStructures/LinkedList/LinkedList.md)
+- [**Hash tables**](DataStructures/HashTable/HashTable.md)

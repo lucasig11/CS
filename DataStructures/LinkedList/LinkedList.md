@@ -5,7 +5,8 @@
 - Can be asymptotically more efficient to manipulate insertions/deletions than other data structures, like in a contiguous array.
 - A *doubly linked list* makes the deletion process faster, since you're able to delete a node by directly accessing him (O(1)) without taking the risk of losing the edges that pointed to him. 
 
-**[See singly-linked list implementation in C.](singly_linked_list.c)**
+**[See singly-linked list implementation in C.](singly_linked_list.c)**  
+
 **[See doubly-linked list implementation in C.](doubly_linked_list.c)**
 
 ~~~bash

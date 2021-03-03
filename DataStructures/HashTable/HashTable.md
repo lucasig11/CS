@@ -10,8 +10,7 @@
   - Must produce the same output for the same input.
   - Should be as "random" as possible.
   - Should be fast.
-- Finding data in arrays and linked lists (Linear time, *O(n)*) is assimptotically slower than finding in a hash table (Constant time, *O(1)*).
-- Good way of implementing a dictionary.
+- Finding data in arrays and linked lists (Linear time, *O(n)*) is assimptotically more complex than finding in a hash table (Constant time, *O(1)*).
 
 **[See hash table implementation in C.](hashtable.c)**
 

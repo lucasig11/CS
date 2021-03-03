@@ -2,11 +2,9 @@
 CC=gcc
  
 # Flags for compiler
-CC_FLAGS=-W         \
-         -Wall      \
-         -pedantic
+CC_FLAGS=-W -Wall -pedantic
 
-all: lists hash
+all: lists hash tree
 
 lists : singly doubly
 
@@ -18,3 +16,6 @@ doubly: LinkedList/doubly_linked_list.c
 
 hash: HashTable/hashtable.c
 	$(CC) -o HashTable/hashtable HashTable/hashtable.c $(CC_FLAGS)
+
+tree: Trees/tree.c
+	$(CC) -o Trees/tree Trees/tree.c $(CC_FLAGS)

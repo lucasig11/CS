@@ -12,6 +12,5 @@
 ~~~bash
 cd DataStructures       
 make lists                    
-cd LinkedList
-./singly_linked_list    ## or ./doubly_linked_list
+./LinkedList/singly_linked_list    ## or ./LinkedList/doubly_linked_list
 ~~~

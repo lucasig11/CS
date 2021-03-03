@@ -13,6 +13,7 @@ node *insert_at_head(node **head, node *node_to_insert);
 node *find_node(node *head, int value);
 void remove_node(node **head, node *node_to_remove);
 void insert_after_node(node *node_to_insert_after, node *newnode);
+void free_list(node **head);
 void print_list(node *head);
 
 node *head = NULL;
@@ -31,8 +32,10 @@ int main(void)
     printf("found node with value %d\n", tmp->value);
 
     insert_after_node(tmp, create_new_node(120));
-    remove_node(&head, head);
-    print_list(head);   
+    remove_node(&head, tmp);
+    print_list(head); 
+    free_list(&head);  
+    print_list(head); 
     return 0;
 }
 
@@ -87,6 +90,19 @@ void remove_node(node **head, node *node_to_remove)
     free(node_to_remove);
     
     return;
+}
+
+void free_list(node **head)
+{
+    int count = 0;
+    while (*head != NULL)
+    {
+        node *tmp = *head;
+        *head = tmp->next;
+        free(tmp);
+        count++;
+    }
+    printf("%d nodes were freed.\n", count);
 }
 
 void print_list(node *head)

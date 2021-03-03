@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define TABLE_SIZE 6   
-#define MAX_NAME 256
+#define MAX_NAME 256 
+#define TABLE_SIZE 10   
 
 // Data that will be stored in the table.
 typedef struct person {
@@ -15,8 +15,8 @@ typedef struct person {
 } person;
 
 // Prototypes
-void init_hashtable();
 void print_list();
+void init_hashtable();
 unsigned int hash (char *name);
 bool hash_table_insert(person *p);
 person *hash_table_delete(char *name);
@@ -77,17 +77,6 @@ int main(void)
     return 0;
 }
 
-// Initialize the table.
-void init_hashtable()
-{
-    // Clear the table setting all the pointers to NULL
-    unsigned int i;
-    for (i = 0; i < TABLE_SIZE; i++)
-    {
-        hashtable[i] = NULL;
-    }
-}
-
 // Prints the hash table to sdout.
 void print_list()
 {
@@ -104,13 +93,24 @@ void print_list()
             printf("\t%d\t%s ", i, tmp->name);
             while(tmp->next != NULL)
             {
-                printf("--> %s ", tmp->next->name);
+                printf("\t=>  %s ", tmp->next->name);
                 tmp = tmp->next;
             }
             printf("\n");
         }
     }
     printf("======================================\n\n");
+}
+
+// Initialize the table.
+void init_hashtable()
+{
+    // Clear the table setting all the pointers to NULL
+    unsigned int i;
+    for (i = 0; i < TABLE_SIZE; i++)
+    {
+        hashtable[i] = NULL;
+    }
 }
 
 // Hash the input to a location in the array.

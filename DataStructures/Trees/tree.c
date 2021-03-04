@@ -53,26 +53,6 @@ int main(void)
     return 0;
 }
 
-// Inverts the tree
-void invert_tree(node *root)
-{
-    if (root == NULL) return;
-
-    // Base case: there's nothing to invert (node has no child);
-    if (root->left == NULL && root->right == NULL) return;
-    
-    // Move to the children
-    invert_tree(root->left);
-    invert_tree(root->right);
-
-    // Swap the node's children
-    node *tmp   = root->left;
-    root->left  = root->right;
-    root->right = tmp;
-
-    return;
-}
-
 // Creates new 'loose' node
 node *create_node(int value)
 {
@@ -82,8 +62,7 @@ node *create_node(int value)
     
     // Set initial pointers
     new_node->value = value;
-    new_node->left = NULL;
-    new_node->right = NULL;
+    new_node->left = new_node->right = NULL;
     
     return new_node;
 }
@@ -103,6 +82,35 @@ node *insert_node(node **root, int value)
     return NULL;
 }
 
+// Finds a node with the corresponding value
+node *find_node(node *root, int value)
+{
+    if (root == NULL) return NULL;
+    if (root->value == value) return root;
+    if (root->value > value) return find_node(root->left, value);
+    return find_node(root->right, value);
+}
+
+// Inverts the tree
+void invert_tree(node *root)
+{
+    if (root == NULL) return;
+
+    // Base case: there's nothing to invert (node has no child);
+    if (root->left == NULL && root->right == NULL) return;
+    
+    // Move to the children
+    invert_tree(root->left);
+    invert_tree(root->right);
+
+    // Swap the node's children
+    node *tmp   = root->left;
+    root->left  = root->right;
+    root->right = tmp; 
+
+    return;
+}
+
 // Unloads tree from the heap
 void unload_tree(node **root)
 {
@@ -117,15 +125,6 @@ void unload_tree(node **root)
     free(*root);
     *root = NULL;
     return;
-}
-
-// Finds a node with the corresponding value
-node *find_node(node *root, int value)
-{
-    if (root == NULL) return NULL;
-    if (root->value == value) return root;
-    if (root->value > value) return find_node(root->left, value);
-    return find_node(root->right, value);
 }
 
 // Recursion helper

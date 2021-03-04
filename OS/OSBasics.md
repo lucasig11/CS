@@ -46,6 +46,29 @@ Process switching.
 3. **File System Management:** The OS provides primitives for transmitting, processing and storing file system objects.
 4. **Device Management:** Processes access I/O devices using the system call interface. The OS tries to manage said devices in a manner that makes them efficiently shared among all processes requiring them. A system call is a programming interface to the services provided by the OS, typically written in C/C++.
 
+
+### CPU Scheduling
+- 3 different time scales:
+   -**Long-term scheduler:** Decides which processes are going to run.
+   -**Mid-term scheduler:** Controls how many processes are going to run in the CPU simultaneously and which ones are pagged out to disk.
+   -**Short-term scheduler:** Executes task as efficiently as possible.
+
+- Process/thread states: created, active, waiting, ready, exited
+- CPU-bound (use more CPU than waits for I/O events) and IO-bound (mostly waits for I/O events) processes.
+- Cooperative schedulers: runs tasks to completion (waits for the process to give the CPU back).
+- Preemptive schedulers: Sets a timer (*quantum*) and takes back control when the timer is off.
+- Most modern OS use preemptive schedulers
+- Other desing choices:
+  - How many jobs per second it finishes;
+  - How responsive the jobs are;
+  - Hierarchy between jobs;
+  - Minimize waiting time;
+  - Minimize turnaround (response) time;
+
+- Scheduler algorithms:
+  - First In First Out: enqueue jobs;
+  - Round Robin: one quantum per task, in order of arrival.
+  - Shortest Job First (SJF): Executes the job that has the least amount of time left.
 ---
 
 <h5 id='5-pcb'>Process Control Blocks</h5>

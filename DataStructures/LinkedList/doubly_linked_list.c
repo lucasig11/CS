@@ -1,123 +1,196 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Node definition
+// Type definition
 typedef struct node {
     int value;
     struct node* next; 
     struct node* prev; 
 } node;
 
+typedef struct {
+    node *head;
+    int length;
+} linked_list;
+
 // Prototypes
-node *create_new_node(int value);
-node *insert_at_head(node **head, node *node_to_insert);
-node *find_node(node *head, int value);
-void remove_node(node **head, node *node_to_remove);
-void insert_after_node(node *node_to_insert_after, node *newnode);
-void free_list(node **head);
-void print_list(node *head);
+linked_list *list_init();
+node *node_create(int value);
+node *list_searchNode(linked_list *list, int value);
+node *list_headInsert(linked_list **list, node *new_node);
+void list_removeNode(linked_list **list, node *node_to_remove);
+void list_insertAfterNode(node *node_to_insert_after, node *new_node);
+void list_free(linked_list **list);
+void print_list(linked_list *list);
+void do_demo();
 
-node *head = NULL;
-
-// Main functions
-int main(void)
+int main()
 {
-    node *tmp;
-    // Create 25 nodes and insert them at the list's head
-    for (int i = 0; i < 26; i++) {
-        tmp = create_new_node(i);
-        insert_at_head(&head, tmp);
-    }
-    // Find a node with the value 13
-    tmp = find_node(head, 13);
-    printf("found node with value %d\n", tmp->value);
-    // Insert a node after the found node
-    insert_after_node(tmp, create_new_node(120));
-    // Remove the list's head
-    remove_node(&head, tmp);
-    print_list(head);
-    free_list(&head);   
-    print_list(head);   
+    do_demo(); 
     return 0;
 }
 
-node *create_new_node(int value)
+void do_demo()
 {
-    // Malloc the node
-    node *newnode = malloc(sizeof(node));
-    if (newnode == NULL) exit(1);
-    // Set the node values
-    newnode->value = value;
-    newnode->next = NULL;
-    newnode->prev = NULL;
-    return newnode;
-}
+    // Initialize pointers in the stack to empty lists on the heap
+    linked_list *list1 = list_init(), *list2 = list_init();
+    if (list1 == NULL || list2 == NULL) return;
+    
+    node *tmp;
 
-node *insert_at_head(node **head, node *node_to_insert)
-{
-    node_to_insert->next = *head;
-    if (*head != NULL) {
-        (*head)->prev = node_to_insert;
+    printf("Creating lists...\n");
+    // Fill the 1st list
+    for (int i = 0; i < 14; i++)
+    {
+        tmp = node_create(i);
+        list_headInsert(&list1, tmp);
     }
-    *head = node_to_insert;
-    return node_to_insert;
+    printf("List 1:\n");
+    print_list(list1);
+    printf("\n");
+
+    // Fill the 2nd list
+    for (int i = 7; i >= 0; i--)
+    {
+        tmp = node_create(i);
+        list_headInsert(&list2, tmp);
+    }
+    printf("List 2:\n");
+    print_list(list2);
+    printf("\n");
+
+    // Find a node by it's value
+    printf("Searching for a node in the list with the value 12... ");
+    tmp = list_searchNode(list1, 12);
+    printf("%s\n", tmp != NULL ? "Node found!" : "Node not found!");
+    printf("\n");
+
+    // Remove the found node
+    printf("Delete the found node:\n");
+    list_removeNode(&list1, tmp);
+    print_list(list1);
+    printf("\n");
+    
+    // Remove list's head
+    printf("Delete the list's head:\n");
+    list_removeNode(&list2, list2->head);
+    print_list(list2);
+    printf("\n");
+    
+    // Clear the heap
+    printf("Clearing the heap... \n");
+    list_free(&list1);
+    list_free(&list2);
+    printf("\n");
 }
 
-node *find_node(node *head, int value)
+node *node_create(int value)
 {
-    node *tmp = head;
-    while (tmp != NULL) {
-        if (tmp->value == value) return tmp;
+    node *new_node = malloc(sizeof(node));
+    if (new_node != NULL) {
+        // Set the node values
+        new_node->value = value;
+        new_node->next = NULL;
+        new_node->prev = NULL;
+    }
+    return new_node;
+}
+
+linked_list *list_init() {
+    linked_list *list = malloc(sizeof(linked_list));
+    if (list != NULL) {
+        list->head = NULL;
+        list->length = 0;
+    }
+    return list;
+}
+
+node *list_headInsert(linked_list **list, node *new_node)
+{
+    // Insert new node in front of head
+    new_node->next = (*list)->head;
+
+    if (new_node->next != NULL)
+        new_node->next->prev = new_node;
+
+    // Set the new node as head
+    (*list)->head = new_node;
+
+    // Increment list length variable
+    (*list)->length++;
+
+    return new_node;
+}
+
+node *list_searchNode(linked_list *list, int value)
+{
+    node *tmp = list->head;
+
+    while (tmp->value != value ) 
         tmp = tmp->next;
-    }
-    return NULL;
+
+    return tmp;
 } 
 
-void insert_after_node(node *node_to_insert_after, node *newnode)
+void list_insertAfterNode(node *node_to_insert_after, node *new_node)
 {
-    newnode->next = node_to_insert_after->next;
-    if (newnode->next != NULL) {
-        newnode->next->prev = newnode;
-    }
-    newnode->prev = node_to_insert_after;
-    node_to_insert_after->next = newnode;
+    new_node->next = node_to_insert_after->next;
+
+    if (new_node->next != NULL)
+        new_node->next->prev = new_node;
+
+    new_node->prev = node_to_insert_after;
+    node_to_insert_after->next = new_node;
 }
 
-void remove_node(node **head, node *node_to_remove)
+void list_removeNode(linked_list **list, node *node_to_remove)
 {  
-    if (*head == node_to_remove) {
-        *head = node_to_remove->next;
-        (*head)->prev = NULL;
-        return;
-    } 
-    node_to_remove->prev->next = node_to_remove->next;
-    if (node_to_remove->next != NULL)
-        node_to_remove->next->prev = node_to_remove->prev;
+    // Cursor points to the list's head's address.
+    node **cursor = &(*list)->head;
 
+    // Walk through the list until the entry is found
+    while ((*cursor) != node_to_remove)
+        cursor = &(*cursor)->next;
+    
+    // Remove it
+    *cursor = node_to_remove->next;
     free(node_to_remove);
-    return;
+    
+    // Decrement list length
+    (*list)->length--;
 }
 
-void free_list(node **head)
+void list_free(linked_list **list)
 {
     int count = 0;
-    while (*head != NULL)
+    node *tmp;
+
+    // Walk the list, freeing the nodes
+    while ((*list)->head != NULL)
     {
-        node *tmp = *head;
-        *head = tmp->next;
+        tmp = (*list)->head;
+        // Change the list's head
+        (*list)->head = tmp->next;
+        // Free old head
         free(tmp);
-        count++;
+        count++; 
     }
+
+    // Free the list
+    free(*list);
     printf("%d nodes were freed.\n", count);
 }
 
-void print_list(node *head)
+void print_list(linked_list *list)
 {
-    node *tmp = head;
+    if (list == NULL) return;
 
-    while (tmp != NULL) {
-        printf(" %d => ", tmp->value);
+    node *tmp = list->head;
+    while (tmp != NULL)
+    {
+        printf("%s %d <=> ", tmp == list->head ? "(*head) " : "", tmp->value);
         tmp = tmp->next;
     }
     printf("\n");
+    printf("The list has %d nodes\n", list->length);
 }

@@ -12,6 +12,6 @@
 
 ~~~bash
 cd DataStructures       
-make tree                    
-./Trees/tree
+make all                    
+./demo/tree
 ~~~

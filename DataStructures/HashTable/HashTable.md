@@ -16,7 +16,6 @@
 
 ~~~bash
 cd DataStructures
-make hash                    
-cd HashTable
-./hashtable 
+make all                 
+./demo/hashtable 
 ~~~

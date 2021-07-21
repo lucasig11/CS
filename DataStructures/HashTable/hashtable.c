@@ -17,13 +17,15 @@ typedef struct person {
 // Prototypes
 void print_list();
 void init_hashtable();
-unsigned int hash (char *name);
-bool hash_table_insert(person *p);
-person *hash_table_delete(char *name);
-person *hash_table_find(char *name);
+unsigned int hash (char *);
+bool hash_table_insert(person *);
+person *hash_table_delete(char *);
+person *hash_table_find(char *);
 
 // Create hash table.
 person *hashtable[TABLE_SIZE];
+
+unsigned int ITEM_COUNT = 0;
 
 int main(void)
 {
@@ -64,12 +66,13 @@ int main(void)
     print_list();
 
     // finds someone in the table
-    person *lookup =  hash_table_find("Lula");
-    printf("Person %s with age %d found\n", lookup->name, lookup->age);
+    person *tmp = hash_table_find("Lula");
+    printf("Person %s with age %d found\n", tmp->name, tmp->age);
 
     // delete a few people
+    printf("Deleting Josef, Vladimir and Kim.\n");
     hash_table_delete("Josef");
-    hash_table_delete("Leon");
+    hash_table_delete("Vladimir");
     hash_table_delete("Kim");
 
     // prints the new table
@@ -105,23 +108,29 @@ void print_list()
 // Initialize the table.
 void init_hashtable()
 {
+    ITEM_COUNT = 0;
+
     // Clear the table setting all the pointers to NULL
-    unsigned int i;
-    for (i = 0; i < TABLE_SIZE; i++)
-    {
+    for (size_t i = 0; i < TABLE_SIZE; i++)
         hashtable[i] = NULL;
-    }
 }
 
 // Hash the input to a location in the array.
-unsigned int hash (char *name)
+unsigned int hash(char *str)
 {
-    unsigned int hash = 0;
-    for (int i = 0, n = strlen(name); i < n; i++)
-    {
-        hash = (hash << 2) ^ name[i];
-    }
+    unsigned long hash = 5381;
+    int c;
+
+    while ((c = *str++))
+        hash = ((hash << 5) + hash) + c;
+
     return hash % TABLE_SIZE;
+}
+
+// Returns the amount of items stored in the hash table
+unsigned int size()
+{
+    return ITEM_COUNT;
 }
 
 // Insert in the table
@@ -129,28 +138,25 @@ bool hash_table_insert(person *p)
 {
     if (p == NULL) return false;
     int index = hash(p->name);
+    
     p->next = hashtable[index];
     hashtable[index] = p;
+
     return true;
 }
 
 // Delete from the table
 person *hash_table_delete(char *name)
 {
-    int index = hash(name);
-    person *tmp = hashtable[index];
-    person *prev = NULL;
-    while (tmp != NULL && strncasecmp(tmp->name, name, MAX_NAME) != 0) {
-        prev = tmp;
-        tmp = tmp->next;
-    }
-    if (tmp == NULL) return NULL;
-    if (prev == NULL) {
-        hashtable[index] = tmp->next;
-    } else {
-        prev->next = tmp->next;
-    }
-    return tmp; // return the pointer so it can be freed if it was allocated on the heap;
+    // Pointer to list's head
+    person **tmp = &hashtable[hash(name)];
+
+    while ((*tmp) != NULL && strncasecmp((*tmp)->name, name, MAX_NAME) != 0)
+        tmp = &(*tmp)->next;
+
+    *tmp = (*tmp)->next;
+    
+    return *tmp; // return the pointer so it can be freed if it was allocated on the heap;
 }
 
 // Find in the table by name
@@ -158,8 +164,9 @@ person *hash_table_find(char *name)
 {
     int index = hash(name);
     person *tmp = hashtable[index];
-    while (tmp != NULL && strncasecmp(tmp->name, name, MAX_NAME) != 0) {
+
+    while (tmp != NULL && strncasecmp(tmp->name, name, MAX_NAME) != 0)
         tmp = tmp->next;
-    }
-    return tmp; // return the pointer so it can be freed if it was allocated on the heap;
+
+    return tmp;
 }

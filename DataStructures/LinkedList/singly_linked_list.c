@@ -77,7 +77,7 @@ linked_list *list_init()
 
 node *create_new_node(int value)
 {
-    node *newnode = malloc(sizeof(node));
+    node *newnode = malloc(sizeof *newnode);
    
     if (newnode != NULL) {
         newnode->value = value;

@@ -86,7 +86,7 @@ void do_demo()
 
 node *node_create(int value)
 {
-    node *new_node = malloc(sizeof(node));
+    node *new_node = malloc(sizeof *new_node);
     if (new_node != NULL) {
         // Set the node values
         new_node->value = value;

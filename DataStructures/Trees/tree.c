@@ -1,8 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <sys/resource.h>
+#include <sys/time.h>
 
 // This is the indentation when printing the tree
 #define COUNT 7
+#define TREE_SIZE 2000000
+ 
+// Undefine any definitions
+#undef calculate
+#undef getrusage
 
 // Node definition
 typedef struct node {
@@ -18,38 +26,66 @@ node *insert_node(node **root, int value);
 node *find_node(node *root, int value);
 void Rprint_tree(node *root, int space);
 void print_tree(node *root);
+double calculate(const struct rusage *b, const struct rusage *a);
 
 // Initialize root
 node *root = NULL;
 
 int main(void)
 {
-    insert_node(&root, 15); // new root;
-    insert_node(&root, 19);
-    insert_node(&root, 24); 
-    insert_node(&root, 13); 
-    insert_node(&root, 16);
-    insert_node(&root, 9);
-    insert_node(&root, 11);
-    insert_node(&root, 21);
-    insert_node(&root, 14);
-    insert_node(&root, 5);
-    
-    printf("\n-------------New tree------------\n");
-    print_tree(root);
+    // Structures for timing data
+    struct rusage before, after;
+    double time_insert = 0.0, time_search = 0.0, time_invert = 0.0, time_unload = 0.0;
 
+    // Seed random number
+    srand(time(NULL));
+    getrusage(RUSAGE_SELF, &before);
+    for (int i = 0; i < TREE_SIZE; i++)
+    {
+        int r = rand() % TREE_SIZE;
+        insert_node(&root, r);
+    }
+    insert_node(&root, 16);
+    getrusage(RUSAGE_SELF, &after);
+    
+    // Calculate time to load dictionary
+    time_insert = calculate(&before, &after);
+
+    printf("\n-------------New tree------------\n");
+    // print_tree(root);
+
+    getrusage(RUSAGE_SELF, &before);
     node *find = find_node(root, 16);
+    getrusage(RUSAGE_SELF, &after);
+
+    time_search = calculate(&before, &after);
+
     if (find != NULL) {
         printf("\n----------Binary Search----------\n\n");
         printf("Value found: %d\n", find->value);
     }
 
     printf("\n----------Inverting tree----------\n");
+    getrusage(RUSAGE_SELF, &before);
     invert_tree(root);
-    print_tree(root);
+    getrusage(RUSAGE_SELF, &after);
+    time_invert = calculate(&before, &after);
+    // print_tree(root);
 
+    getrusage(RUSAGE_SELF, &before);
     unload_tree(&root);    
+    getrusage(RUSAGE_SELF, &after);
+    time_unload = calculate(&before, &after);
+
     printf("\n\n");
+
+    printf("TIME IN insert:         %.6fs\n", time_insert);
+    printf("TIME IN search:         %.6fs\n", time_search);
+    printf("TIME IN invert:         %.6fs\n", time_invert);
+    printf("TIME IN unload:         %.6fs\n", time_unload);
+    printf("TIME IN TOTAL:         %.6fs\n", 
+            time_unload + time_insert + time_search + time_invert);
+
     return 0;
 }
 
@@ -157,4 +193,21 @@ void print_tree(node *root)
         return; 
     }
     Rprint_tree(root, 0);
+}
+
+// Returns number of seconds between b and a
+double calculate(const struct rusage *b, const struct rusage *a)
+{
+    if (b == NULL || a == NULL)
+    {
+        return 0.0;
+    }
+    else
+    {
+        return ((((a->ru_utime.tv_sec * 1000000 + a->ru_utime.tv_usec) -
+                  (b->ru_utime.tv_sec * 1000000 + b->ru_utime.tv_usec)) +
+                 ((a->ru_stime.tv_sec * 1000000 + a->ru_stime.tv_usec) -
+                  (b->ru_stime.tv_sec * 1000000 + b->ru_stime.tv_usec)))
+                / 1000000.0);
+    }
 }

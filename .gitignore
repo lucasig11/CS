@@ -1,4 +1,5 @@
 *.pdf
+**/demo
 **/**/.vscode
 /GoStack Bootcamp 11
 /CS50
